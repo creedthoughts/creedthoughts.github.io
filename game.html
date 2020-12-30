@@ -1,0 +1,94 @@
+<html>
+<head>
+<style>
+body {background-color: Plum;}
+canvas{ border: 2px solid black;}
+</style>
+</head>
+<body>
+ 
+  <canvas id = "game"></canvas>
+<script>
+  var Key = {  
+    _pressed: {},
+    LEFT: 37,
+    UP: 38,
+    RIGHT: 39,
+    DOWN: 40,
+
+    isDown: function(keyCode){
+      return this._pressed[keyCode];
+    },
+ 
+    onKeydown: function(event) {
+      this._pressed[event.keyCode] = true;
+    },
+ 
+    onKeyup: function(event) {
+      delete this._pressed[event.keyCode];
+    }
+  };
+ 
+  window.addEventListener('keyup', function(event) {Key.onKeyup(event); }, false);
+  window.addEventListener('keydown', function(event) {Key.onKeydown(event); }, false);
+  
+  
+  //REALLY IMPORTANT CHANGE
+  var canvas = document.getElementById('game');
+  canvas.width = 1200; //window.innerWidth;
+  canvas.height =700; //window.innerHeight;
+  
+  var x = 50;
+  var y = 50;
+  var ctx = canvas.getContext('2d');
+  var playerSize = 50;
+  var speed = 3;
+  function draw() {
+   
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.fillStyle = "rgb(255, 255, 255)";
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    
+    //MOVE UP
+    if(Key.isDown(Key.UP)){
+      y -= speed;
+      if(y < 0){
+        y= canvas.height-playerSize;
+      }
+    }
+    
+    //MOVE DOWN
+    if(Key.isDown(Key.DOWN)){
+      y += speed;
+      if(y > canvas.height){
+        y= y%canvas.height;
+      }
+    }
+    
+    //MOVE LEFT
+    if(Key.isDown(Key.LEFT)){
+      x -= speed;
+      if(x < 0){
+        x = canvas.width-playerSize;
+      }
+    }
+    
+    //MOVE RIGHT
+    if(Key.isDown(Key.RIGHT)){
+      x += speed;
+      if(x > canvas.width){
+        x= x%canvas.width;
+      }
+    }
+   
+    
+    var player = new Path2D();
+    player.arc(x,y,playerSize,0,2*Math.PI);
+    ctx.fillStyle = "#FF0000"
+    ctx.fill(player)
+  }
+  setInterval(draw, 10);
+ 
+</script>
+</body>
+</html>
