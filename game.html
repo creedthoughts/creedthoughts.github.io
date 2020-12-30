@@ -6,7 +6,7 @@ canvas{ border: 2px solid black;}
 </style>
 </head>
 <body>
- 
+    <img id="papyrus"  src="PapyrusFront1.png" style="display:none">
   <canvas id = "game"></canvas>
 <script>
   var Key = {  
@@ -42,7 +42,7 @@ canvas{ border: 2px solid black;}
   var y = 50;
   var ctx = canvas.getContext('2d');
   var playerSize = 50;
-  var speed = 3;
+  var speed = 6;
   function draw() {
    
     ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -81,12 +81,13 @@ canvas{ border: 2px solid black;}
       }
     }
    
-    
-    var player = new Path2D();
-    player.arc(x,y,playerSize,0,2*Math.PI);
-    ctx.fillStyle = "#FF0000"
-    ctx.fill(player)
-  }
+    var player=document.getElementById("papyrus");
+    ctx.drawImage(player,x,y);
+   // var player = new Path2D();
+    //player.arc(x,y,playerSize,0,Math.PI);
+    //ctx.fillStyle = "#FF0000"
+    //ctx.fill(player)
+  }3
   setInterval(draw, 10);
  
 </script>
